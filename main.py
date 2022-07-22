@@ -44,7 +44,7 @@ def main():
     msg = can.Message(arbitration_id=0x100,
                       is_extended_id=True,
                       is_remote_frame=True)
-    xbus.send(msg)
+    bus.send(msg)
 
     time.sleep(5)
 
