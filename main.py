@@ -37,6 +37,7 @@ DATABASE_DBC = {
     "toerenTeller": [['Motor_1', 'Motordrehzahl', 2000, 0.01, "speed meter on"]]
 }
 
+
 def decodebremse_1():
     import cantools
     db = cantools.db.load_file('/home/selaam/Downloads/vw_golf_mk4 (copy).dbc')
@@ -53,30 +54,6 @@ def decodebremse_1():
 
     print(msg_data)
     sendMessage(msg.frame_id, msg_data)
-
-
-def runCommand():
-    for message in DATABASE.get("knipperlichten"):
-        id = message[0]
-        data = message[1]
-        period = message[2]
-        sleepTime = message[3]
-        message = message[4]
-
-        sendMessage(id, data, period, sleepTime)
-        print(message)
-        """
-            for aparaat in DATABASE.values():
-                for message in aparaat:
-                    id = message[0]
-                    data = message[1]
-                    period = message[2]
-                    sleepTime = message[3]
-                    message = message[4]
-        
-                    sendMessage(id, data, period, sleepTime)
-                    print(message)
-        """
 
     # decode('Motor_1', 'Motordrehzahl', 3000, 0.01)
 
@@ -142,6 +119,12 @@ def knipperlichten():
     time.sleep(10)
 
 
+def sendToIdWithDataRange():
+    for i in range(0, 255):
+        sendMessage(0x1A0, [i, i, i, i, i, i, i, i], 0.02, 0)
+        print(i)
+
+
 def sendMessage(hexId, data, period, sleepTime):
     try:
         bus = getBus()
@@ -190,6 +173,7 @@ if __name__ == '__main__':
     # knipperlichten()
     # fill()
     # decode()
-    runCommand()
+    # runCommand()
+    sendToIdWithDataRange()
 # kmteller()
 # toerenteller()
