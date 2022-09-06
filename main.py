@@ -162,9 +162,9 @@ def generate():
                         for indexF in range(start, end):
                             for indexG in range(start, end):
                                 for indexH in range(start, end):
-                                    print(indexH, indexG, indexF, indexE, indexD, indexC, indexB, indexA)
-
-generate()
+                                    teller_id = DATABASE.get("kmTeller")[0]
+                                    print("trying kmTeller for (", teller_id, ")[", indexH, indexG, indexF, indexE, indexD, indexC, indexB, indexA, "]")
+                                    sendMessage(teller_id, [indexH, indexG, indexF, indexE, indexD, indexC, indexB, indexA], "km cmd")
 
 
 def main():
