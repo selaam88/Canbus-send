@@ -11,7 +11,7 @@ import time
 import can
 import serial
 
-CAN_DEV = '/dev/ttyUSB1@3000000'
+CAN_DEV = '/dev/ttyUSB0@3000000'
 
 SLEEP_TIME_SECOND = 10
 DATABASE = {
@@ -120,6 +120,12 @@ def knipperlichten():
 
 
 def sendToIdWithDataRange():
+    for j in range(1,8):
+        for i in range(0, 255):
+            sendMessage(0x1A0, [i, i, i, i, i, i, i, i], 0.02, 0)
+            print(i)
+
+def repeat(array, id):
     for i in range(0, 255):
         sendMessage(0x1A0, [i, i, i, i, i, i, i, i], 0.02, 0)
         print(i)
@@ -136,13 +142,29 @@ def sendMessage(hexId, data, period, sleepTime):
     bus.send_periodic(message, period)
     time.sleep(sleepTime)
 
-
+def sendSequential():
+    sendMessage(0x320, generate(), 0.01, 1)
 def getBus():
     bus = can.interface.Bus(bustype='slcan',
                             channel=CAN_DEV,
                             rtscts=True,
                             bitrate=500000)
     return bus
+
+def generate():
+    start = 0
+    end =255
+    for indexA in range(start, end):
+        for indexB in range(start, end):
+            for indexC in range(start, end):
+                for indexD in range(start, end):
+                    for indexE in range(start, end):
+                        for indexF in range(start, end):
+                            for indexG in range(start, end):
+                                for indexH in range(start, end):
+                                    print(indexH, indexG, indexF, indexE, indexD, indexC, indexB, indexA)
+
+generate()
 
 
 def main():
@@ -174,6 +196,8 @@ if __name__ == '__main__':
     # fill()
     # decode()
     # runCommand()
-    sendToIdWithDataRange()
+    # sendToIdWithDataRange()
+     generate()
+
 # kmteller()
 # toerenteller()
