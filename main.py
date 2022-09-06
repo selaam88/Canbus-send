@@ -166,7 +166,12 @@ def generate():
                                     print("trying kmTeller for (", teller_id, ")[", indexH, indexG, indexF, indexE, indexD, indexC, indexB, indexA, "]")
                                     sendMessage(teller_id, [indexH, indexG, indexF, indexE, indexD, indexC, indexB, indexA], "km cmd")
 
-
+def generate2():
+    start = 0
+    end =255
+    for indexA in range(start, end):
+            sendMessage(0x531, [indexA,indexA,indexA,indexA],0)
+            print(indexA)
 def main():
     """main routine."""
     try:
@@ -197,7 +202,9 @@ if __name__ == '__main__':
     # decode()
     # runCommand()
     # sendToIdWithDataRange()
-     generate()
+    # generate()
+     generate2()
+    # sendSequential()
 
 # kmteller()
 # toerenteller()
