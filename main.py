@@ -131,7 +131,7 @@ def repeat(array, id):
         print(i)
 
 
-def sendMessage(hexId, data, sleepTime): #deleted periode
+def sendMessage(hexId, data, period, sleepTime):
     try:
         bus = getBus()
     except serial.serialutil.SerialException as err:
@@ -139,8 +139,7 @@ def sendMessage(hexId, data, sleepTime): #deleted periode
         sys.exit(1)
 
     message = can.Message(arbitration_id=hexId, is_extended_id=False, data=data)
-    #bus.send_periodic(message, period)
-    bus.send(message)
+    bus.send_periodic(message, period)
     time.sleep(sleepTime)
 
 def sendSequential():
@@ -163,8 +162,9 @@ def generate():
                         for indexF in range(start, end):
                             for indexG in range(start, end):
                                 for indexH in range(start, end):
-                                    print(indexH, indexG, indexF, indexE, indexD, indexC, indexB, indexA)
-
+                                    teller_id = DATABASE.get("kmTeller")[0]
+                                    print("trying kmTeller for (", teller_id, ")[", indexH, indexG, indexF, indexE, indexD, indexC, indexB, indexA, "]")
+                                    sendMessage(teller_id, [indexH, indexG, indexF, indexE, indexD, indexC, indexB, indexA], "km cmd")
 
 def generate2():
     start = 0
@@ -202,6 +202,7 @@ if __name__ == '__main__':
     # decode()
     # runCommand()
     # sendToIdWithDataRange()
+    # generate()
      generate2()
     # sendSequential()
 
